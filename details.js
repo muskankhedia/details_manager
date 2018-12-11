@@ -45,7 +45,6 @@ function add(req,res){
                 console.warn('[SUCCESS] inserted into the database with username='+username);
             console.warn(res1)
             isErr=false;
-            dbo.close();
             resSend(res);
         })   
     })

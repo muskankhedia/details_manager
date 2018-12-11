@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <div style="height:60px; background-color: blue;margin:0px; ">
@@ -18,17 +21,20 @@
         Add Details
     </a>
     </div>
-<div>
-    <% details.forEach(function (member) { %>
-        <li>  
-            <h1><%= member.name %></h1>  
-        </li>             
-        <button onclick="location.href = '0.0.0.0:3000/read';" id="read" class="float-left submit-button" >Read</button>  
-        <button onclick="location.href = '0.0.0.0:3000/edit';" id="edit" class="float-left submit-button" >Edit</button>
-        <button onclick="location.href = '0.0.0.0:3000/delete';" id="delete" class="float-left submit-button" >delete</button>
-                        
-    <% }) %>
-</div>
+
+    <div>
+
+        <% members.forEach(function (member) { %>
+            <li>  
+                <h1><%= member.username %></h1>  
+            </li>             
+            <button onclick="location.href = '0.0.0.0:3000/read';" id="read" class="float-left submit-button" >Read</button>  
+            <button onclick="location.href = '0.0.0.0:3000/edit';" id="edit" class="float-left submit-button" >Edit</button>
+            <button onclick="location.href = '0.0.0.0:3000/delete';" id="delete" class="float-left submit-button" >delete</button>
+                            
+        <% }) %>
+    </div>
+
   
 </body>
 <script type="text/javascript" src="../details.js"></script>

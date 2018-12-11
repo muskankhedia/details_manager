@@ -5,6 +5,19 @@ const app = require('express')(),
       path = require('path'),
       url = '0.0.0.0';
 
+const mongo = require('mongodb').MongoClient,
+url1 = 'mongodb://localhost:27017/crud_api';
+var ObjectID = require('mongodb').ObjectID;
+
+mongo.connect(url1,(e,dbo) =>{
+    if(e) console.error(e);
+        console.warn('[SUCCESS] connected to the database');
+        let db = dbo.db('crud_api');
+        var colle = db.collection('details').find({});
+        console.log(colle)
+        dbo.close();
+})
+
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
@@ -24,21 +37,64 @@ const app = require('express')(),
         res.render('index')
     });
 
-    app.post('add_details',(req,res) => {
-        
-    });
-
     app.post('/details', (req,res) => {
+
+        let email = req.body.email,
+        username = req.body.username,
+        number = req.body.number;
+        
+    mongo.connect(url1, (e, dbo) => {
+        if(e) console.error(e);
+        console.warn('[SUCCESS] connected to the database');
+        let db = dbo.db('crud_api');
+        // colle =  db.listCollections();
+        let obj = {
+            'email':email,
+            'username':username,
+            'number':number,
+        }
+        db.collection('details').insertOne(obj, (e,res1) =>{
+            if(e) console.error(e);
+            else
+                console.warn('[SUCCESS] inserted into the database with username='+username);
+            console.warn(res1)
+            isErr=false;
+            dbo.close();
+        })   
+    })
+
         console.log(req.body);
-        details_data.add(req,res);
-        var members = details_data.all_details();
-        res.render('details',{details:members});
+        
+        mongo.connect(url1, (e, dbo) => {
+            if(e) console.error(e);
+            console.warn('[SUCCESS] connected to the database');
+            let db = dbo.db('crud_api');
+            db.collection('details').find({}, function(err, members) {   
+                if (err) throw err;
+                console.log("hii")
+                // console.log(members)
+                console.log(members.username)
+                res.render('details', { "members": members });  
+        })
+        dbo.close();
     });
+});
 
     app.get('/details', (req,res)=>{
-        var members = details_data.all_details();
-        res.render('details',{details:members});
+        mongo.connect(url1, (e, dbo) => {
+            if(e) console.error(e);
+            console.warn('[SUCCESS] connected to the database');
+            let db = dbo.db('crud_api');
+            db.collection('details').find().toArray(function(err, members){   
+                if (err) throw err;
+                console.log("hii")
+                // console.log(members)
+                console.log(members.username)
+                res.render('details', { "members": members });  
+        })
+        dbo.close();
     })
+});
 
     //Add Route
     app.get('/add',(req,res) => {
