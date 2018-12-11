@@ -33,9 +33,7 @@ function add(req,res){
         if(e) console.error(e);
         console.warn('[SUCCESS] connected to the database');
         let db = dbo.db('crud_api');
-        console.log(db);
         colle =  db.listCollections();
-        console.log(colle)
         let obj = {
             'email':email,
             'username':username,
@@ -50,49 +48,74 @@ function add(req,res){
             dbo.close();
             resSend(res);
             
-        })
-        
-    } )
-
-
+        })   
+    })
 }
 
 function read(req,res){
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    db.collection('details').findOne(details, (err, item) => {
-      if (err) {
-        res.send({'error':'An error has occurred'});
-      } else {
-        res.send(item);
-      }
-    });
+
+    mongo.connect(url, (e, dbo) => {
+        if(e) console.error(e);
+        console.warn('[SUCCESS] connected to the database');
+        let db = dbo.db('crud_api');
+        colle =  db.listCollections();
+
+        db.collection('details').findOne(details, (err, item) => {
+            if (err) {
+              res.send({'error':'An error has occurred'});
+            } else {
+              res.send(item);
+            }
+            isErr=false;
+            dbo.close();
+        })   
+    })
 }
 
 function update(req,res){
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    const note = { text: req.body.body, title: req.body.title };
-    db.collection('details').update(details, note, (err, result) => {
-      if (err) {
-          res.send({'error':'An error has occurred'});
-      } else {
-          res.send(note);
-      } 
-    });
 
+    mongo.connect(url, (e, dbo) => {
+        if(e) console.error(e);
+        console.warn('[SUCCESS] connected to the database');
+        let db = dbo.db('crud_api');
+        colle =  db.listCollections();
+        const note = { text: req.body.body, title: req.body.title };
+            db.collection('details').update(details, note, (err, result) => {
+            if (err) {
+                res.send({'error':'An error has occurred'});
+            } else {
+                res.send(note);
+            } 
+            isErr = false;
+            dbo.close();
+        })   
+    })
 }
+
 
 function remove(req,res){
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    db.collection('details').remove(details, (err, item) => {
-      if (err) {
-        res.send({'error':'An error has occurred'});
-      } else {
-        res.send('Note ' + id + ' deleted!');
-      } 
-    });
+
+    mongo.connect(url, (e, dbo) => {
+        if(e) console.error(e);
+        console.warn('[SUCCESS] connected to the database');
+        let db = dbo.db('crud_api');
+        colle =  db.listCollections();
+        db.collection('details').remove(details, (err, item) => {
+            if (err) {
+              res.send({'error':'An error has occurred'});
+            } else {
+              res.send('Note ' + id + ' deleted!');
+            } 
+            isErr=false;
+            dbo.close();
+        })   
+    })
 }
 
 
