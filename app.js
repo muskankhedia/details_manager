@@ -2,6 +2,7 @@ const app = require('express')(),
       bodyParser = require('body-parser'),
       port = process.env.PORT || 5000,
       details_data = require('./details'),
+      path = require('path'),
       url = '0.0.0.0';
 
 
@@ -15,9 +16,12 @@ const app = require('express')(),
         next();
     });
 
+    app.set('view engine', 'ejs');
+  app.set('views', path.join(__dirname, 'views'));
+
     //Index Route
     app.get('/',(req,res) => {
-        res.sendFile(__dirname + "/views/index.html")
+        res.render('index')
     });
 
     app.post('/details', (req,res) => {
@@ -27,22 +31,22 @@ const app = require('express')(),
 
     //Add Route
     app.get('/add',(req,res) => {
-        res.sendFile(__dirname + "/views/add.html")
+        res.render('add');
     });
 
     //Read Details Route
-    app.get('/read',(req,res) => {
-
+    app.get('/read/:id',(req,res) => {
+        details_data.read(req,res);
     });
 
     //Edit Details Route
-    app.get('/edit',(req,res) => {
-
+    app.put('/edit/:id',(req,res) => {
+        details_data.update(req,res);
     });
 
     //Delete Details Route
-    app.get('/delete',(req,res) => {
-
+    app.get('/delete/:id',(req,res) => {
+        details_data.put(req,res);
     });
 
 const server = app.listen(port, url, e => {
