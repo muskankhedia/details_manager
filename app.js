@@ -9,12 +9,11 @@ const mongo = require('mongodb').MongoClient,
 url1 = 'mongodb://localhost:27017/crud_api';
 var ObjectID = require('mongodb').ObjectID;
 
+
 mongo.connect(url1,(e,dbo) =>{
     if(e) console.error(e);
         console.warn('[SUCCESS] connected to the database');
         let db = dbo.db('crud_api');
-        var colle = db.collection('details').find({});
-        console.log(colle)
         dbo.close();
 })
 
@@ -61,19 +60,13 @@ mongo.connect(url1,(e,dbo) =>{
             isErr=false;
             dbo.close();
         })   
-    })
-
-        console.log(req.body);
-        
+    })  
         mongo.connect(url1, (e, dbo) => {
             if(e) console.error(e);
             console.warn('[SUCCESS] connected to the database');
             let db = dbo.db('crud_api');
-            db.collection('details').find({}, function(err, members) {   
+            db.collection('details').find().toArray( function(err, members) {   
                 if (err) throw err;
-                console.log("hii")
-                // console.log(members)
-                console.log(members.username)
                 res.render('details', { "members": members });  
         })
         dbo.close();
@@ -87,9 +80,6 @@ mongo.connect(url1,(e,dbo) =>{
             let db = dbo.db('crud_api');
             db.collection('details').find().toArray(function(err, members){   
                 if (err) throw err;
-                console.log("hii")
-                // console.log(members)
-                console.log(members.username)
                 res.render('details', { "members": members });  
         })
         dbo.close();
@@ -102,20 +92,93 @@ mongo.connect(url1,(e,dbo) =>{
     });
 
     //Read Details Route
-    app.get('/read/:id',(req,res) => {
-        details_data.read(req,res1);
-        console.log(res1);
-        res.render(read,{details:res1})
+    app.get('/details/:id',(req,res) => {
+
+        const id = req.params.id;
+        const details = { '_id': new ObjectID(id) };
+
+        mongo.connect(url1, (e, dbo) => {
+            if(e) console.error(e);
+            console.warn('[SUCCESS] connected to the database');
+            let db = dbo.db('crud_api');
+            colle =  db.listCollections();
+    
+            db.collection('details').findOne(details, (err, members) => {
+                if (err) {
+                  res.send({'error':'An error has occurred'});
+                } else {
+                  res.render('read',{"members":members});
+                }
+                isErr=false;
+                dbo.close();
+            })   
+        })
     });
 
     //Edit Details Route
-    app.put('/edit/:id',(req,res) => {
-        details_data.update(req,res);
+    app.get('/edit/:id',(req,res) => {
+        const id = req.params.id;
+        const details = { '_id': new ObjectID(id) };
+    
+        mongo.connect(url1, (e, dbo) => {
+            if(e) console.error(e);
+            console.warn('[SUCCESS] connected to the database');
+            let db = dbo.db('crud_api');
+            
+            db.collection('details').findOne(details, (err, members) => {
+                if (err) {
+                  res.send({'error':'An error has occurred'});
+                } else {
+                  res.render('edit',{"members":members});
+                }
+                isErr=false;
+                dbo.close();
+            })    
+        })
     });
+
+    app.post('/edited/:id', (req,res) => {
+        const id = req.params.id;
+        const details = { '_id': new ObjectID(id) };
+
+
+        mongo.connect(url1, (e, dbo) => {
+            if(e) console.error(e);
+            console.warn('[SUCCESS] connected to the database');
+            let db = dbo.db('crud_api');
+            const note = { username: req.body.username, email: req.body.email, number:req.body.number };
+            db.collection('details').update(details, note, (err, result) => {
+            if (err) {
+                res.send({'error':'An error has occurred'});
+            } else {
+                res.render("index");
+            } 
+            isErr = false;
+            dbo.close();
+           })  
+        })
+    })
 
     //Delete Details Route
     app.get('/delete/:id',(req,res) => {
-        details_data.put(req,res);
+        const id = req.params.id;
+        const details = { '_id': new ObjectID(id) };
+    
+        mongo.connect(url1, (e, dbo) => {
+            if(e) console.error(e);
+            console.warn('[SUCCESS] connected to the database');
+            let db = dbo.db('crud_api');
+            colle =  db.listCollections();
+            db.collection('details').remove(details, (err, item) => {
+                if (err) {
+                  res.send({'error':'An error has occurred'});
+                } else {
+                  res.render('delete');
+                } 
+                isErr=false;
+                dbo.close();
+            })   
+        })
     });
 
 

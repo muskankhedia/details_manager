@@ -30,20 +30,20 @@
         </h3>
 <div style="width:50%; margin-left: 20%;">
 
-        <form action="/details" method="put">
+        <form action="/edited/<%=members._id %>" method="post">
             <div class="form-group">
                 <label for="Name">Name</label>
-                <input type="text" class="form-control" name="username" id="username" value = "{{details.name}}">
+                <input type="text" class="form-control" name="username" id="username" value = "<%=members.username %>">
             </div>
 
             <div class="form-group">
                 <label for="Email">Email</label>
-                <input type="email" class="form-control" name="email" id="email" value="{{details.email}}">
+                <input type="email" class="form-control" name="email" id="email" value="<%=members.email %>">
             </div>
 
             <div class="form-group">
                 <label for="Mobile Number">Mobile number</label>
-                <input type="number" class="form-control" name="number" id="number" value="{{details.number}}">
+                <input type="number" class="form-control" name="number" id="number" value="<%= members.number %>">
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
