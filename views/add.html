@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <div style="height:60px; background-color: blue;margin:0px; ">
+        <a href ="/add"  id="addDetails" onClick = "" style="float: right;margin-top: 15px;margin-right:70px;color: white;font-size: 20px;">
+            Add Details
+        </a>
+
+    </div>
+
+    <div class = "card card-body" >
+        <h3 style="margin-left:20%">  
+            Add Details
+        </h3>
+<div style="width:50%; margin-left: 20%;">
+
+        <form action="/details" method="post">
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <input type="text" class="form-control" name="username" id="username">
+            </div>
+
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="email" class="form-control" name="email" id="email">
+            </div>
+
+            <div class="form-group">
+                <label for="Mobile Number">Mobile number</label>
+                <input type="number" class="form-control" name="number" id="number">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+
+    </div>
+</div>
+    
+</body>
+</html>
