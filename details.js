@@ -1,5 +1,5 @@
 const mongo = require('mongodb').MongoClient,
-    url = 'mongodb+srv://muskan:crud_api@cluster0-wcimw.mongodb.net/MyProjects?retryWrites=true';
+    url = 'mongodb://localhost:27017/crud_api';
 var ObjectID = require('mongodb').ObjectID;
 
 var output = {
@@ -121,6 +121,10 @@ function remove(req,res){
 function all_details(req,res){
     var member;
     mongo.connect(url,(e,dbo) => {
+        if(e) console.error(e);
+        console.warn('[SUCCESS] connected to the database');
+        let db = dbo.db('crud_api');
+        
         db.collection('details').find({}).exec(function(err,members){
             member = members;
         })

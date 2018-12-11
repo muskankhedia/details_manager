@@ -3,7 +3,6 @@ const app = require('express')(),
       port = process.env.PORT || 3000,
       details_data = require('./details'),
       path = require('path'),
-      methodOverride = require('method-override')
       url = '0.0.0.0';
 
 
@@ -26,16 +25,20 @@ const app = require('express')(),
     });
 
     app.post('add_details',(req,res) => {
-        console.log(req.body);
-        details_data.add(req,res);
-        res.redirect('/details')
+        
     });
 
-    app.get('/details', (req,res) => {
-        
+    app.post('/details', (req,res) => {
+        console.log(req.body);
+        details_data.add(req,res);
         var members = details_data.all_details();
         res.render('details',{details:members});
     });
+
+    app.get('/details', (req,res)=>{
+        var members = details_data.all_details();
+        res.render('details',{details:members});
+    })
 
     //Add Route
     app.get('/add',(req,res) => {
