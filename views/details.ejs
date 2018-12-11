@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Read the member details</title>
+    <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
@@ -17,21 +17,19 @@
     <a href ="/add"  id="addDetails" onClick = "" style="float:left; margin-top: 15px;margin-left:70px;color: white;font-size: 20px;">
         Add Details
     </a>
-
-</div>
-
+    </div>
 <div>
-        <tr>
-            <td>
-                Name: <%=details.name %>
-            </td>
-            <td>
-                Email Address: <%=details.email %>
-            </td>
-            <td>
-                Mobile Number: <%=details.number %>
-            </td>
-        </tr>         
+    <% details.forEach(function (member) { %>
+        <li>  
+            <h1><%= member.name %></h1>  
+        </li>             
+        <button onclick="location.href = '0.0.0.0:3000/read';" id="read" class="float-left submit-button" >Read</button>  
+        <button onclick="location.href = '0.0.0.0:3000/edit';" id="edit" class="float-left submit-button" >Edit</button>
+        <button onclick="location.href = '0.0.0.0:3000/delete';" id="delete" class="float-left submit-button" >delete</button>
+                        
+    <% }) %>
 </div>
+  
 </body>
+<script type="text/javascript" src="../details.js"></script>
 </html>

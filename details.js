@@ -1,5 +1,5 @@
 const mongo = require('mongodb').MongoClient,
-    url = "mongodb+srv://cluster0-wcimw.mongodb.net/test --username muskan";
+    url = 'mongodb+srv://muskan:crud_api@cluster0-wcimw.mongodb.net/MyProjects?retryWrites=true';
 var ObjectID = require('mongodb').ObjectID;
 
 var output = {
@@ -47,7 +47,6 @@ function add(req,res){
             isErr=false;
             dbo.close();
             resSend(res);
-            
         })   
     })
 }
@@ -118,6 +117,18 @@ function remove(req,res){
     })
 }
 
+//store all the details in the database
+function all_details(req,res){
+    var member;
+    mongo.connect(url,(e,dbo) => {
+        db.collection('details').find({}).exec(function(err,members){
+            member = members;
+        })
+        res.send(member)
+        db.close();
+    });
+}
+
 
 
 
@@ -126,4 +137,5 @@ module.exports = {
    read:read,
    update:update,
    remove:remove,
+   all_details:all_details,
 }

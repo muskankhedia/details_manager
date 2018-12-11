@@ -3,6 +3,7 @@ const app = require('express')(),
       port = process.env.PORT || 3000,
       details_data = require('./details'),
       path = require('path'),
+      methodOverride = require('method-override')
       url = '0.0.0.0';
 
 
@@ -24,9 +25,16 @@ const app = require('express')(),
         res.render('index')
     });
 
-    app.post('/details', (req,res) => {
+    app.post('add_details',(req,res) => {
         console.log(req.body);
         details_data.add(req,res);
+        res.redirect('/details')
+    });
+
+    app.get('/details', (req,res) => {
+        
+        var members = details_data.all_details();
+        res.render('details',{details:members});
     });
 
     //Add Route
@@ -36,7 +44,9 @@ const app = require('express')(),
 
     //Read Details Route
     app.get('/read/:id',(req,res) => {
-        details_data.read(req,res);
+        details_data.read(req,res1);
+        console.log(res1);
+        res.render(read,{details:res1})
     });
 
     //Edit Details Route
@@ -48,6 +58,8 @@ const app = require('express')(),
     app.get('/delete/:id',(req,res) => {
         details_data.put(req,res);
     });
+
+
 
 const server = app.listen(port, url, e => {
     if(e) throw e;
