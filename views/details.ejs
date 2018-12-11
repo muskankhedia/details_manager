@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Members Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
@@ -21,41 +21,42 @@
         Add Details
     </a>
     </div>
-
-    <div>
+    <h1 style="margin-left:20%;">
+        Details Of All the Members
+    </h1>
+<div style="margin-left:20%;margin-right:20%;">
 
         <% members.forEach(function (member) { %>
-            <li>  
-                Name: <%= member.username %>  
-            </li>             
-            <li>
-                Email: <%= member.email %>
-            </li>
-            <li>
-                Number: <%= member.number %>
-            </li>
+        <div style="border:1px black solid;margin:10px;border-radius:2em;padding-left:20px;padding-bottom:10px;">
+            <div style="width:50%;font-size: 18px;">
+                <b>Name:</b> <%= member.username %>  
+                <br />             
+                
+                    <b>Email:</b> <%= member.email %>
+                <br />
+                
+                    <b>Number:</b> <%= member.number %>
+                <br />
+            </div>
 
-            <li>
-                Id: <%= member._id %>
-            </li>
-            <form action="/details/<%= member._id %>" method="GET">
-                <button id="read">Read</button>
-            </form>
+            <div style="width:50%; " >
+                <form style="display:inline;" action="/details/<%= member._id %>" method="GET">
+                    <button id="read" class= "btn btn-primary">Read</button>
+                </form>
 
-            <form action="/edit/<%= member._id %>" method="PUT">
-                <button id="edit">Edit</button>
-            </form>
-            <form action="/delete/<%= member._id %>" method="DELETE">
-                <button id="delete">Delete</button>
-            </form>
+                <form style="display:inline;" action="/edit/<%= member._id %>" method="PUT">
+                    <button id="edit" class="btn btn-primary">Edit</button>
+                </form>
+                <form style="display:inline" action="/delete/<%= member._id %>" method="DELETE">
+                    <button id="delete" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
             <!-- <button onclick="location.href = '0.0.0.0:3000/details/:id';" id="read" class="float-left submit-button" >Read</button>   -->
             <!-- <button onclick="location.href = '0.0.0.0:3000/edit/:id';" id="edit" class="float-left submit-button" >Edit</button> -->
             <!-- <button onclick="location.href = '0.0.0.0:3000/delete/:id';" id="delete" class="float-left submit-button" >delete</button> -->
-                            
+        </div>            
         <% }) %>
-    </div>
-
-  
+</div>
 </body>
 <script type="text/javascript" src="../details.js"></script>
 </html>
