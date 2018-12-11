@@ -1,6 +1,6 @@
 const app = require('express')(),
       bodyParser = require('body-parser'),
-      port = process.env.PORT || 5000,
+      port = process.env.PORT || 3000,
       details_data = require('./details'),
       path = require('path'),
       url = '0.0.0.0';
